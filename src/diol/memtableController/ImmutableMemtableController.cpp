@@ -212,8 +212,13 @@ int ImmutableMemtableController::read(uint64_t key) {
 int ImmutableMemtableController::diskRead(uint64_t key){
 //    cout<<"reading Disk data~";
 //    disk.readCount++;
-    diskReadCnt++;
-    diskReadData++;
+
+    int value = disk.read(key);
+    if(value!=NULL){
+        diskReadCnt++;
+        diskReadData++;
+    }
+    
     return disk.read(key);
 }
 
@@ -221,8 +226,12 @@ map<uint64_t, int> ImmutableMemtableController::diskRange(uint64_t start, uint64
 //    cout<<"ranging Disk datas~ ";
     map<uint64_t, int> diskData = disk.range(start, end);
     //disk.readCount += diskData.size();
-    diskReadData+=diskData.size();
-    diskReadCnt++;
+    if(!diskData.empty()){
+
+        diskReadData+=diskData.size();
+        diskReadCnt++;
+
+    }
 
     return diskData;
 }

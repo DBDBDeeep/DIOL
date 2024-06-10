@@ -3,7 +3,7 @@
 SCRIPT_TO_RUN="./test_workload.sh"
 
 # A부터 G까지의 값 목록
-values=("B" "D")
+values=("A" "B" "D")
 
 # A부터 G까지 순차적으로 실행
 for VALUE in "${values[@]}"; do
