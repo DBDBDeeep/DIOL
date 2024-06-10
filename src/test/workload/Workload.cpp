@@ -352,7 +352,7 @@ void Workload::printDelayData(){
     // }
 
      cout<<"compaction queue :"<<immCon.compactionQueue.size()<<"\n";
-     int compaction =immCon.compactionQueue.front()->mem.size();
+     //int compaction =immCon.compactionQueue.front()->mem.size();
 
 
 
@@ -392,8 +392,8 @@ void Workload::printDelayData(){
     D_memory = delayImmMemtableNum + actCon.activeDelayMemtable->mem.size();
 
     cout<<"\ndisk read : "<< immCon.diskReadCnt<<"\n";
-    cout<<"\ndisk read data : "<< immCon.diskReadData<<" \n";
-    N_memory+=compaction;
+    cout<<"disk read data : "<< immCon.diskReadData<<" \n";
+   // N_memory+=compaction;
 
     cout<<"delay data in Memory : "<< D_memory<<"\n";
     cout<<"delay data in Disk : "<<D_disk<<"\n";
