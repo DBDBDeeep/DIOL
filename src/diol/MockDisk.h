@@ -8,10 +8,8 @@
 #include <iostream>
 
 #define LOG_STR(str) \
-//    cout<<str<<endl;
 
 #define LOG_ID(id) \
-//    cout<<id<<endl;
 
 
 struct MockDisk {

@@ -16,34 +16,20 @@ int main(int argc, char* argv[]) {
     string workloadFilePath = "../src/test/dataset/workload/" + workloadFileName+".txt";
     int halfLines = workloadA.extractHalfLinesFromFilename(initFilePath);
 
-    /**init dataset의 halfline만큼 읽어서 워크로드 진행 전 선행시킬 INSERT작업 데이터셋 저장*/
     std::list<Record> initWorkload = workloadA.readFileFromStart(initFilePath, halfLines);
-    /**실질 INSERT, READ, RANGE 워크로드 데이터셋 파일 읽어서 저장*/
     std::list<Record> mixedWorkload = workloadA.readFileWhole(workloadFilePath);
 
-
-
-    //initWorkload을 이용해서 INSERT 작업 진행
     workloadA.executeWorkload(initWorkload, false);
+    initWorkload.clear();
 
-    //mixedWorkload을 이용해서 INSERT, READ, RANGE 작업 진행
     workloadA.executeWorkload(mixedWorkload, true);
-
-
-    MockDisk& disk = MockDisk::getInstance();
- 
-    
 
     workloadA.printDelayData();
 
     // workloadA.deleteAllSSTable();
-
     // workloadA.makeSSTable();
-
     // CompactionTest compacton;
     // compacton.runCompaction();
-
-
 
 
 }

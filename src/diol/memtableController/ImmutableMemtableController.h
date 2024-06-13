@@ -24,7 +24,7 @@ static const int LIMIT_SIZE_NORMAL_M1 = 5;
 static const int LIMIT_SIZE_DELAY_M1 = 8;
 //static const int LIMIT_SIZE_DELAY_M1 = 4;
 static const int LIMIT_SIZE_NORMAL_M2 = 5;
-static const int LIMIT_SIZE_DELAY_M2 = 7;
+static const int LIMIT_SIZE_DELAY_M2 = 8;
 //static const int LIMIT_SIZE_DELAY_M2 = 3;
 
 class FlushController;
@@ -53,7 +53,7 @@ public:
     int DM2min=0;
     int DM2max=0;
     int diskReadCnt=0;
-    int diskReadData=0;
+    uint64_t diskReadData=0;
     vector<IMemtable*> normalImmMemtableList_M1; // limit LIMIT_SIZE_NORMAL_M1
     vector<IMemtable*> delayImmMemtableList_M1; // limit LIMIT_SIZE_DELAY_M1
     vector<IMemtable*> normalImmMemtableList_M2; // limit LIMIT_SIZE_NORMAL_M2

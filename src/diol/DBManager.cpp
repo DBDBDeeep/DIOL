@@ -13,18 +13,13 @@ int DBManager::readData(uint64_t key){
 map<uint64_t , int> DBManager::range(uint64_t start, uint64_t end){
     return immMemtableController.range(start, end);
 }
-//bool DBManager::isFull(IMemtable& memtable){
-//
-//}
 
 int DBManager::getIdAndIncrement(){
     return ++currentId;
 }
 
 IMemtable* DBManager::transformM0ToM1(IMemtable* memtable) {
-    // TODO (논의) : 사실 INSERTING 전에 lock 걸고 작업후 해제하기 때문에.. 필요없을 수도 있음.
-    //    while(memtable->memTableStatus==INSERTING);
-//    {
+
     std::unique_lock<std::mutex> lock(memtable->immMutex);
 
     ActiveMemtableController& activeController = ActiveMemtableController::getInstance();
@@ -61,5 +56,5 @@ IMemtable* DBManager::transformM0ToM1(IMemtable* memtable) {
         return activeController.updateDelayMem(getIdAndIncrement());
     }else
         throw logic_error("DBManager::transformM0ToM1 주소비교.. 뭔가 문제가 있는 듯 하오.");
-//    }
+
 }

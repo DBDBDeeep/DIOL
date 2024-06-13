@@ -54,8 +54,8 @@ void CompactionTest::compactSSTables(std::vector<testSSTable>& normalTables, std
 void CompactionTest::runCompaction() {
     std::cout << "runCompaction\n";
 
-    std::string inputDir = "/home/haena/DBDBDeep/IoTDB-lsm/src/test/SSTable";
-    std::string outputDir = "/home/haena/DBDBDeep/IoTDB-lsm/src/test/compactionSSTable";
+    std::string inputDir = "/home/haena/DBDBDeep/DIOL/src/test/SSTable";
+    std::string outputDir = "/home/haena/DBDBDeep/DIOL/src/test/compactionSSTable";
 
     std::vector<std::string> normalFiles;
     std::vector<std::string> delayFiles;

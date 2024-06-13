@@ -8,9 +8,9 @@ DelayMemtable::DelayMemtable(int id) {
     this->lastKey = static_cast<uint64_t>(-1);
     this->memtableId = id;
     this->memTableStatus = WORKING;
-//    this->memtableSize = 1024 * 1024;
-    this->memtableSize = 1 * 1024 * 1024;
-//    this->memtableSize =  512;
+//    this->memtableSize = 2*1024 * 1024;
+    this->memtableSize = 0.2 * 1024 * 1024;  //시연용
+
 }
 
 bool DelayMemtable::isFull(){

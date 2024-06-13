@@ -25,7 +25,6 @@ void FlushController::checkTimeout(Type t) {
             if (memtable->ttl <= 0) {
                 LOG_STR("1  flushQueue.push\n");
                 imm.flushQueue.push(memtable);
-//                printFlushQueue(imm);
                 imm.erase(imm.normalImmMemtableList_M2, memtable);
                 timeoutFound = true;
 
@@ -41,7 +40,6 @@ void FlushController::checkTimeout(Type t) {
             if (memtable->ttl <= 0) {
                 LOG_STR("2  flushQueue.push\n");
                 imm.flushQueue.push(memtable);
-//                printFlushQueue(imm);
                 imm.erase(imm.delayImmMemtableList_M2, memtable);
                 timeoutFound = true;
                 imm.deleteMem(imm.DM2start, memtable->memtableId);
@@ -58,17 +56,15 @@ void FlushController::checkTimeout(Type t) {
             if(normalMem != NULL) {
                 LOG_STR("3  flushQueue.push\n");
                 imm.flushQueue.push(normalMem);
-//                printFlushQueue(imm);
                 imm.erase(imm.normalImmMemtableList_M2, normalMem);
             }
         }else{
-        //else if(t == D) {
+
             IMemtable *delayMem = findMemtableWithMinAccess(imm.delayImmMemtableList_M2);
 
             if (delayMem != NULL) {
                 LOG_STR("4  flushQueue.push\n");
                 imm.flushQueue.push(delayMem);
-//                printFlushQueue(imm);
                 imm.erase(imm.delayImmMemtableList_M2, delayMem);
             }
         }

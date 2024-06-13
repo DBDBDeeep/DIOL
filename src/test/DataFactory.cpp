@@ -123,7 +123,6 @@ void DataFactory::generateDelaySegments(std::vector<std::vector<int>>& outOfOrde
 
     // 생성된 segment 개수와 총 segment개수 불일치할 경우 계산 보정
     if(totalAssigned < segmentDataNum) {
-//        cout <<"보정"<<segmentDataNum-totalAssigned<<endl;
         sizes.push_back(segmentDataNum-totalAssigned);
     } else if(totalAssigned > segmentDataNum) {
         int diff = totalAssigned - segmentDataNum;
@@ -145,7 +144,6 @@ void DataFactory::generateDelaySegments(std::vector<std::vector<int>>& outOfOrde
 
         delayedKey = nextDis(g);
 
-//         std::cout << "\n구간 " << i + 1 << " (" << sizes[i] << "개) : " << delayedKey << " ~ " << delayedKey + sizes[i] - 1 << "\n";
 
         for (int j = 0; j < sizes[i]; j++) {
             outOfOrderKeysPerSegment[i].push_back(delayedKey + j);
@@ -353,19 +351,19 @@ void DataFactory::writeToInitFile(string filePath,  set<int>& dataSet, vector<st
 
 
     for(const auto &segment : segmentRandomKeys){
-//        cout << "각 segment size" << segment.size() << endl;
+
         for(const auto &key : segment){
             copyOutofOrderKeysPerSegment[segmentDelayOffsets[offsetIdx]].push_back(key);
         }
         offsetIdx++;
     }
-    //copyOutofOrderKeysPerSegment의 key별 vector<int>의 마지막 요소 출력
+
     for(const auto &it : copyOutofOrderKeysPerSegment){
         if(it.first<it.second.back()){
             cout << "offset이 seg의 마지막 요소보다 작습니다. delay가 아닐 수 있음"<<endl;
             cout<<it.first<<","<<it.second.back()<<endl;
         }
-//        cout << "segment offset: " << it.first << " 마지막 요소: " << it.second.back() << endl;
+
     }
 
     if (!outputFile.is_open()) {
@@ -379,16 +377,13 @@ void DataFactory::writeToInitFile(string filePath,  set<int>& dataSet, vector<st
     auto segIt = copyOutofOrderKeysPerSegment.begin();
 
     for (const auto& element : dataSet) {
-//        outputFile << "INSERT," << element << std::endl;
-        lineCount++;
 
-        //singleDelayKeys의 0번째 key와 lineCount가 일치하는 경우, outputFile에 쓰기
+        lineCount++;
         if(singleIt->first==lineCount){
-//            outputFile << "INSERT," << singleIt->second << std::endl;
+
             singleIt++;
         }
 
-        //copyOutofOrderKeysPerSegment의 key와 lineCount가 일치하는 경우, copyOutofOrderKeysPerSegment의 value를 outputFile에 쓰기
         if(segIt->first==lineCount){
             for(const auto &key : segIt->second){
 //                outputFile << "INSERT," << key << std::endl;

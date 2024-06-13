@@ -23,23 +23,20 @@ bool ActiveMemtableController::insertData(IMemtable& memtable, uint64_t key, int
             if(activeNormalMemtable->startKey>key){  //delay data
                 insertData(*activeDelayMemtable, key, value);
             }else{ //normal data
-//                unique_lock<immMutex> lock(activeNormalMemtable->immMutex);
                 activeNormalMemtable->memTableStatus = INSERTING;
                 activeNormalMemtable->setStartKey(key);
                 activeNormalMemtable->put(key, value);
                 activeNormalMemtable->memTableStatus = WORKING;
-//                lock.unlock();
             }
             return true;
         } catch (exception &e) {
             cerr << e.what() << "\n";
         }
     }
-//    unique_lock<immMutex> lock(memtable.immMutex);
+
     memtable.memTableStatus = INSERTING;
     memtable.put(key, value);
     memtable.memTableStatus = WORKING;
-//    lock.unlock();
     return true;
 }
 
