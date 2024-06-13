@@ -10,7 +10,7 @@ int MockDisk::read(uint64_t key) {
     for (auto ss : normalSSTables) {
         if(ss->startKey > key || ss->lastKey < key)
             continue;
-       // readCount++;
+
         // 맵에서 키 검색
         auto it = ss->rows.find(key);
         if (it != ss->rows.end()) {
@@ -25,7 +25,7 @@ int MockDisk::read(uint64_t key) {
             continue;
 
         // 맵에서 키 검색
-        //readCount++;
+
         auto it = ss->rows.find(key);
         if (it != ss->rows.end()) {
             LOG_STR("(found in delaySStale:"+ to_string(ss->sstableId)+")");
@@ -44,23 +44,23 @@ map<uint64_t, int> MockDisk::range(uint64_t start, uint64_t end) {
 //    list<string> delaySSTableIds;
 
     map<uint64_t, int> results;
-//    bool flag;
+
     for (auto ss : normalSSTables) {
-//        flag = false;
+
         if(ss->startKey > end || ss->lastKey < start)
             continue;
-        //readCount++;
+
         auto itStart = ss->rows.lower_bound(start); // start 이상의 첫 번째 요소를 찾음
         auto itEnd = ss->rows.upper_bound(end);     // end 이하의 마지막 요소의 다음 요소를 찾음
 
         for (auto it = itStart; it != itEnd; ++it) {
             results[it->first] = it->second;
-//          flag = true;
+
         }
-//        if(flag) normalSSTableIds.push_back("("+to_string(ss->sstableId)+")");
+
     }
     for (auto ss : delaySSTables) {
-//        flag = false;
+
         if(ss->startKey > end || ss->lastKey < start)
             continue;
         
@@ -69,28 +69,18 @@ map<uint64_t, int> MockDisk::range(uint64_t start, uint64_t end) {
 
         for (auto it = itStart; it != itEnd; ++it) {
             results[it->first] = it->second;
-//            flag = true;
+
         }
-//        if(flag) delaySSTableIds.push_back("("+to_string(ss->sstableId)+")");
+
     }
     // 로깅
-//    if(!normalSSTableIds.empty()) {
-//        LOG_ID("found in normalSSTables ");
-//        for (auto id: normalSSTableIds) LOG_ID(id);
-//        LOG_STR("");
-//    }
-//    if(!delaySSTableIds.empty()) {
-//        LOG_ID("found in delaySSTables ");
-//        for(auto id : delaySSTableIds) LOG_ID(id);
-//        LOG_STR("");
-//    }
+
 
     return results;
 }
 
 bool MockDisk::flush(IMemtable* memtable) {
-//    std::unique_lock<std::mutex> lock(memtable->immMutex);
-//    cout << "MockDisk::flush - id : " << memtable->memtableId <<endl;
+
 
     SSTable* newSSTable = new SSTable(memtable->memtableId);
 
@@ -112,7 +102,7 @@ bool MockDisk::flush(IMemtable* memtable) {
         doFlush(memtable->mem.size());
         return true;
     } else{
-    //else if (memtable->type == DI) {
+
         newSSTable->setType(D);
         delaySSTables.push_back(newSSTable);
         doFlush(memtable->mem.size());

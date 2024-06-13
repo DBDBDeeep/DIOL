@@ -11,8 +11,6 @@ IMemtable* CompactionController::checkTimeOut() {
             if (memtable->ttl == 0) {
                 LOG_STR("compactionQueue.push - timeout");
                 finalMem = memtable;
-//                immController.compactionQueue.push(memtable);
-//                immController.erase(immController.normalImmMemtableList_M1, memtable);
                 timeoutFound = true;
             }
         }
@@ -21,14 +19,10 @@ IMemtable* CompactionController::checkTimeOut() {
     if (!timeoutFound) {
         // 타임아웃된 Memtable이 없을 경우 가장 delay 추정치가 적은 Memtable을 찾아 queue에 삽입
         finalMem = findMemtableWithMinDelay();
-//        IMemtable* minDelayMemtable = findMemtableWithMinDelay();
-//        if(minDelayMemtable != nullptr) {
+
             LOG_STR("compactionQueue.push - least delay");
-//            immController.compactionQueue.push(minDelayMemtable);
-//            immController.erase(immController.normalImmMemtableList_M1, minDelayMemtable);
-//            finalMem = minDelayMemtable;
             LOG_STR("immController.compactionQueue에서 erase 잘 끝냈어요.");
-//        }
+
     }
     LOG_STR("immControll 잘 끝냈어요.");
     return finalMem;

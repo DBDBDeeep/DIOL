@@ -55,7 +55,6 @@ DelayMemtable* CompactProcessor::compaction(IMemtable* memtable, vector<IMemtabl
             ++it;
         }
     }
-//    cout<<delayTable->mem.size() << endl;
 
     resetDelayStartLastKey(delayTable);
     return dynamic_cast<DelayMemtable*>(delayTable);
@@ -71,11 +70,7 @@ IMemtable* CompactProcessor::findTargetMem(IMemtable* memtable, vector<IMemtable
         // 다른 thread가 건드는 중이거나 후보라면 패스
         if(delayMem->memTableStatus == COMPACTING
             || delayMem->memTableStatus == WAITING_FOR_COMPACT) continue;
-        // ttl이 다 됐다면 M2로 즉시 변환
-    //    if(delayMem->ttl == 0){//해나
-    //        immutableMemtableController.transformM1toM2(delayMem);
-    //    }
-    //    else{
+
             long cnt = checkTimeRange(memtable, delayMem);
             if(cnt <= 0) continue;
             if(cnt > maxCnt){
@@ -88,7 +83,6 @@ IMemtable* CompactProcessor::findTargetMem(IMemtable* memtable, vector<IMemtable
                 target = (target->ttl < delayMem->ttl) ? target : delayMem;
                 target->memTableStatus = WAITING_FOR_COMPACT; // 후보 등록
             }
-       // }
     }
     return target;
 }

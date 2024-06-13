@@ -43,7 +43,7 @@ public:
     void cleanup();
     DBManager* getTree();
     void deleteAllSSTable();
-    //void makeSSTable();
+    void makeSSTable();
     void printDelayData();
 private:
     int iteration=0;
